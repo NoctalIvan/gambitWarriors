@@ -1,10 +1,10 @@
 /* returns the gambit that matches a given situation */
-const {actions} = require('../constants')
+const {actionTypes} = require('../constants')
 
 module.exports = (warrior, game) => {
     if(warrior.gambits.length === 0) {
         return {
-            action: actions.WAIT
+            action: actionTypes.WAIT
         }
     }
 

@@ -1,6 +1,6 @@
 /* returns the gambit that a warrior should use */
 const getGambitSelection = require('./getGambitSelection')
-const getTarget = require('./getTarget')
+const getTargets = require('./getTargets')
 
 module.exports = (warrior, game) => {
     if(warrior.ATB > 0) {
@@ -8,11 +8,11 @@ module.exports = (warrior, game) => {
     }
 
     const gambit = getGambitSelection(warrior, game)
-    const target = gambit && gambit.target && getTarget(gambit.target, warrior, game)
+    const targets = getTargets(gambit.target, warrior, game)
     
     return [{
         warrior,
         gambit,
-        target
+        targets
     }]
 }

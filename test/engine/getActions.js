@@ -1,5 +1,6 @@
 const assert = require('assert')
 const getActions = require('../../src/engine/getActions')
+const {actionTypes, targetTypes} = require('../../src/constants')
 
 describe('getActions', () => {
     it('shoudn\'t act with ATB > 0', () => {
@@ -8,13 +9,13 @@ describe('getActions', () => {
     })
 
     it('should return a gambit in normal case', () => {
-        const gambit = {a: 1}
+        const gambit = {action: actionTypes.WAIT, target: targetTypes.SELF}
         const warrior = {ATB: 0, gambits: [gambit]}
         const actions = getActions(warrior)
         assert.deepEqual(actions, [{
             warrior,
             gambit,
-            target: undefined,
+            targets: [warrior],
         }])
     })
 })
