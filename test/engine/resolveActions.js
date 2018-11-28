@@ -8,7 +8,13 @@ describe('resolveActions', () => {
     })
 
     it('should return a gambit in normal case', () => {
-        const actions = resolveActions({ATB: 0, gambits: [{a: 1}]})
-        assert.deepEqual(actions, {a: 1})
+        const gambit = {a: 1}
+        const warrior = {ATB: 0, gambits: [gambit]}
+        const actions = resolveActions(warrior)
+        assert.deepEqual(actions, [{
+            warrior,
+            gambit,
+            target: undefined,
+        }])
     })
 })

@@ -11,4 +11,6 @@ module.exports = (warrior, game) => {
     if(warrior.gambits.length === 1) {
         return warrior.gambits[0]
     }
+
+    throw 'unsupported gambit length > 1'
 }
