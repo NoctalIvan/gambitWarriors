@@ -1,0 +1,25 @@
+{
+  "name": "gambitwarriors",
+  "version": "1.0.0",
+  "description": "A video game concept for huge nerds",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoctalIvan/gambitWarriors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NoctalIvan/gambitWarriors/issues"
+  },
+  "homepage": "https://github.com/NoctalIvan/gambitWarriors#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
