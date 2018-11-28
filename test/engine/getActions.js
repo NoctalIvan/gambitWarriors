@@ -1,16 +1,16 @@
 const assert = require('assert')
-const resolveActions = require('../../src/engine/resolveActions')
+const getActions = require('../../src/engine/getActions')
 
-describe('resolveActions', () => {
+describe('getActions', () => {
     it('shoudn\'t act with ATB > 0', () => {
-        const actions = resolveActions({ATB:1})
+        const actions = getActions({ATB:1})
         assert.deepEqual(actions, [])
     })
 
     it('should return a gambit in normal case', () => {
         const gambit = {a: 1}
         const warrior = {ATB: 0, gambits: [gambit]}
-        const actions = resolveActions(warrior)
+        const actions = getActions(warrior)
         assert.deepEqual(actions, [{
             warrior,
             gambit,

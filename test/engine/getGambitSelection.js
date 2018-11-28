@@ -1,15 +1,15 @@
 const assert = require('assert')
-const resolveGambitSelection = require('../../src/engine/resolveGambitSelection')
+const getGambitSelection = require('../../src/engine/getGambitSelection')
 const {actions} = require('../../src/constants')
 
-describe('resolveGambitSelection', () => {
+describe('getGambitSelection', () => {
     it('no gambits = wait', () => {
-        const gambit = resolveGambitSelection({gambits: []})
+        const gambit = getGambitSelection({gambits: []})
         assert.deepEqual(gambit, {action: actions.WAIT})
     })
 
     it('1 gambit = select', () => {
-        const gambit = resolveGambitSelection({gambits: [{a: 1}]})
+        const gambit = getGambitSelection({gambits: [{a: 1}]})
         assert.deepEqual(gambit, {a: 1})
     })
 })

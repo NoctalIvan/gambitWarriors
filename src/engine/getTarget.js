@@ -1,5 +1,5 @@
-const {targets} = require('./../constants')
-const pickRandom = require('./../util/pickRandom')
+const {targets} = require('../constants')
+const pickRandom = require('../util/pickRandom')
 
 /* returns the sected target */
 module.exports = (target, warrior, game) => {

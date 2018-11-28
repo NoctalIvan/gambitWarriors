@@ -1,5 +1,5 @@
 /* returns the gambit that matches a given situation */
-const {actions} = require('./../../src/constants')
+const {actions} = require('../constants')
 
 module.exports = (warrior, game) => {
     if(warrior.gambits.length === 0) {
