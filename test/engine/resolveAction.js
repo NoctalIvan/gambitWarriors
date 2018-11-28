@@ -1,19 +1,15 @@
 const assert = require('assert')
-const resolveAction = require('../../src/engine/resolveAction')
+const resolveAction = require('../../src/engine/getEffects')
+const actionTypes = require('../../src/constants/actionTypes')
 
 describe('resolveAction', () => {
-    it('should reduce atb bar by speed', () => {
-        const warriorResult = resolveTick({ATB:2, stats: {speed: 1}})
-        assert.equal(warriorResult.ATB, 1)
+    it('WAIT', () => {
+        const warriorResult = resolveAction({a:1}, {type: actionTypes.WAIT})
+        assert.deepEqual(warriorResult, {warrior: {a: 1}})
     })
 
-    it('should reset empty ATB', () => {
-        const warriorResult = resolveTick({ATB:0})
-        assert.equal(warriorResult.ATB, 100)
-    })
-
-    it('should never have ATB < 0', () => {
-        const warriorResult = resolveTick({ATB:1, stats: {speed: 2}})
-        assert.equal(warriorResult.ATB, 0)
+    it('ATTACK', () => {
+        const warriorResult = resolveAction({stats: {hp: 10, }}, {type: actionTypes.ATTACK})
+        assert.deepEqual(warriorResult, {a: 1})
     })
 })

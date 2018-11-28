@@ -1,19 +1,49 @@
 const assert = require('assert')
-const resolveTick = require('./../../src/engine/resolveTick')
+const resolveTick = require('../../src/engine/resolveTick')
+const {actionTypes, targetTypes, eventTypes} = require('../../src/constants')
 
 describe('resolveTick', () => {
-    it('should reduce atb bar by speed', () => {
-        const warriorResult = resolveTick({ATB:2, stats: {speed: 1}})
-        assert.equal(warriorResult.ATB, 1)
-    })
+    it('should resolve a complex tick', () => {
+        const warriorType = {stats: {hp: 10, atk: 2, def: 2}, gambits: [{action: actionTypes.ATTACK, target: targetTypes.RANDOM_ENNEMY}]}
+        const warrior1 = {
+            ...JSON.parse(JSON.stringify(warriorType)),
+            army: 0,
+            ATB: 0
+        }
+        const warrior2 = {
+            ...JSON.parse(JSON.stringify(warriorType)),
+            army: 1,
+            ATB: 1
+        }
 
-    it('should reset empty ATB', () => {
-        const warriorResult = resolveTick({ATB:0})
-        assert.equal(warriorResult.ATB, 100)
-    })
+        const game = {
+            armies: [
+                [JSON.parse(json.stringify(warrior1))],
+                [JSON.parse(json.stringify(warrior2))],
+            ]
+        }
 
-    it('should never have ATB < 0', () => {
-        const warriorResult = resolveTick({ATB:1, stats: {speed: 2}})
-        assert.equal(warriorResult.ATB, 0)
+        const tickResult = resolveTick(game)
+        assert.deepEqual(tickResult, {
+            game: {
+                armies: [
+                    [{
+                        ...warriorType,
+                        army: 0,
+                        ATB: 100
+                    }],
+                    [{
+                        ...warriorType,
+                        army: 0,
+                        ATB: 0
+                    }],
+                ]
+            },
+            events: [
+                {type: eventTypes.ACTION, action: {type: actionTypes.ATTACK, warrior: warrior1, target: warrior2}},
+                {type: eventTypes.DAMAGE, action: {type: actionTypes.DAMAGE, warrior: warrior2, damage: {physical: 1, magical: 1}}},
+                {type: eventTypes.WAIT, action: {type: actionTypes.ATTACK, warrior: warrior2, target: warrior2}},
+            ]
+        })
     })
 })

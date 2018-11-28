@@ -1,10 +1,10 @@
 /* resolves an action on a target */
-const {actionTypes} = require('./../constants')
+const {actionTypes} = require('../constants')
 
-module.exports = (target, action) => {
-    switch(action) {
+module.exports = (action, game) => {
+    switch(action.type) {
         case actionTypes.WAIT:
-            return target
+            return 
         case actionTypes.ATTACK:
             return target
     }

@@ -1,4 +1,5 @@
 module.exports = {
     actionTypes: require('./actionTypes'),
-    targetTypes: require('./targetTypes')
+    targetTypes: require('./targetTypes'),
+    effectTypes: require('./effectTypes')
 }
