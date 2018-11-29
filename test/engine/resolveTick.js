@@ -5,7 +5,7 @@ const {actionTypes, effectTypes, targetTypes} = require('../../src/constants')
 describe('resolveTick', () => {
     it('should resolve a complex tick', () => {
         const warriorType = {
-            stats: {hp: 10, atk: 2, def: 2, speed: 1}, 
+            stats: {hp: 1, atk: 2, def: 2, speed: 1}, 
             gambits: [{actionType: actionTypes.ATTACK, target: targetTypes.RANDOM_ENNEMY}]
         }
         
@@ -32,16 +32,7 @@ describe('resolveTick', () => {
         const tickResult = resolveTick(game)
         assert.deepEqual(tickResult.game, {
             armies: [
-                [{
-                    ...warriorType,
-                    id: 1,
-                    army: 0,
-                    ATB: 100,
-                    stats: {
-                        ...warriorType.stats,
-                        hp: 9
-                    }
-                }],
+                [],
                 [{
                     ...warriorType,
                     id: 2,
@@ -51,7 +42,7 @@ describe('resolveTick', () => {
             ]
         })
 
-        assert.equal(tickResult.events.length, 2)
+        assert.equal(tickResult.events.length, 3)
         assert.equal(tickResult.events[0].type, 'action')
         assert.equal(tickResult.events[0].action.type, actionTypes.ATTACK)
         assert.equal(tickResult.events[0].action.warrior.id, warrior2.id)
@@ -60,5 +51,8 @@ describe('resolveTick', () => {
         assert.equal(tickResult.events[1].effect.type, effectTypes.DAMAGE)
         assert.equal(tickResult.events[1].effect.target.id, warrior1.id)
         assert.deepEqual(tickResult.events[1].effect.damage, {physical: 1, magical: 0})
+        assert.equal(tickResult.events[2].type, 'effect')
+        assert.equal(tickResult.events[2].effect.type, effectTypes.DEATH)
+        assert.equal(tickResult.events[2].effect.target.id, warrior1.id)
     })
 })

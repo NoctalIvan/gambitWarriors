@@ -39,16 +39,15 @@ module.exports = (gameInput) => {
         )
     )))
 
-    effects.forEach(effect => {
+    // resolve effects
+    const newEffects = collapseArray(effects.map(effect => resolveEffect(effect, game)))
+    effects.concat(newEffects).forEach(effect => {
         events = events.concat({
             type: 'effect',
             effect
         })
     })
-
-    // resolve effects
-    effects.forEach(effect => resolveEffect(effect, game))
-
+    
     return {
         game,
         events

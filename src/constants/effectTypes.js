@@ -1,4 +1,5 @@
 module.exports = {
     WAIT: 'wait',
-    DAMAGE: 'damage'
+    DAMAGE: 'damage',
+    DEATH: 'death'
 }
