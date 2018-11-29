@@ -7,8 +7,7 @@ const resolveEffect = require('./resolveEffect')
 const {copy, collapseArray} = require('./../util')
 const {} = require('./../constants')
 
-module.exports = (gameInput) => {
-    const game = copy(gameInput)
+module.exports = (game) => {
     let events = []
 
     // resolve ATB for each warrior
@@ -48,8 +47,5 @@ module.exports = (gameInput) => {
         })
     })
     
-    return {
-        game,
-        events
-    }
+    return events
 }

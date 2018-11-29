@@ -29,8 +29,8 @@ describe('resolveTick', () => {
             ]
         }
 
-        const tickResult = resolveTick(game)
-        assert.deepEqual(tickResult.game, {
+        events = resolveTick(game)
+        assert.deepEqual(game, {
             armies: [
                 [],
                 [{
@@ -42,17 +42,17 @@ describe('resolveTick', () => {
             ]
         })
 
-        assert.equal(tickResult.events.length, 3)
-        assert.equal(tickResult.events[0].type, 'action')
-        assert.equal(tickResult.events[0].action.type, actionTypes.ATTACK)
-        assert.equal(tickResult.events[0].action.warrior.id, warrior2.id)
-        assert.equal(tickResult.events[0].action.targets[0].id, warrior1.id)
-        assert.equal(tickResult.events[1].type, 'effect')
-        assert.equal(tickResult.events[1].effect.type, effectTypes.DAMAGE)
-        assert.equal(tickResult.events[1].effect.target.id, warrior1.id)
-        assert.deepEqual(tickResult.events[1].effect.damage, {physical: 1, magical: 0})
-        assert.equal(tickResult.events[2].type, 'effect')
-        assert.equal(tickResult.events[2].effect.type, effectTypes.DEATH)
-        assert.equal(tickResult.events[2].effect.target.id, warrior1.id)
+        assert.equal(events.length, 3)
+        assert.equal(events[0].type, 'action')
+        assert.equal(events[0].action.type, actionTypes.ATTACK)
+        assert.equal(events[0].action.warrior.id, warrior2.id)
+        assert.equal(events[0].action.targets[0].id, warrior1.id)
+        assert.equal(events[1].type, 'effect')
+        assert.equal(events[1].effect.type, effectTypes.DAMAGE)
+        assert.equal(events[1].effect.target.id, warrior1.id)
+        assert.deepEqual(events[1].effect.damage, {physical: 1, magical: 0})
+        assert.equal(events[2].type, 'effect')
+        assert.equal(events[2].effect.type, effectTypes.DEATH)
+        assert.equal(events[2].effect.target.id, warrior1.id)
     })
 })
