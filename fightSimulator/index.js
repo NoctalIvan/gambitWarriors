@@ -1,7 +1,7 @@
 // simulates a game in GUI
 require('colors')
 const colors = ['green', 'red']
-const resolveTick = require('./../src/engine/resolveTick')
+const resolveGame = require('./../src/engine/resolveGame')
 const {effectTypes} = require('./../src/constants')
 
 const game = {
@@ -30,9 +30,6 @@ const nicePrintAction = (action) => {
 }
 const nicePrintEvents = (events) => events.forEach(event => event.type == 'action' ? nicePrintAction(event.action) : nicePrintEffect(event.effect))
 
-do {
-    const events = resolveTick(game)
-    nicePrintEvents(events)
-} while(!game.armies.find(a => a.length === 0))
-
-console.log('done : victory of ' + (game.armies[0].length > 0 ? 'greens'.green : 'reds'.red))
+const events = resolveGame(game)
+nicePrintEvents(events.slice(0, events.length - 1))
+console.log(events[events.length-1])
