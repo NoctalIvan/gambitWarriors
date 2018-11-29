@@ -8,34 +8,46 @@ const {copy, collapseArray} = require('./../util')
 const {} = require('./../constants')
 
 module.exports = (gameInput) => {
-    let game = copy(gameInput)
-    const events = []
+    const game = copy(gameInput)
+    let events = []
 
     // resolve ATB for each warrior
-    game.armies.forEach(army => army.forEach(warrior => resolveATB(warrior)))
+    game.armies.forEach(army => 
+        army.forEach(warrior => 
+            resolveATB(warrior)
+        )
+    )
 
     // get action for each warrior
-    const actions = collapseArray(game.armies.map(army => army.map(warrior => getActions(warrior, game))))
+    const actions = collapseArray(collapseArray(game.armies.map(army => 
+        army.map(warrior => 
+            getActions(warrior, game)
+        )
+    )))
+
     actions.forEach(action => {
-        events.concat({
+        events = events.concat({
             type: 'action',
             action
         })
     })
 
     // get action effects
-    const effects = collapseArray(actions.map(action => getEffect(action, game)))
+    const effects = collapseArray(collapseArray(actions.map(action => 
+        action.targets.map(target => 
+            getEffect({...action, target}, game)
+        )
+    )))
+
     effects.forEach(effect => {
-        events.concat({
+        events = events.concat({
             type: 'effect',
             effect
         })
     })
 
     // resolve effects
-    effects.forEach(effect => {
-        resolveEffect(effect, game)
-    })
+    effects.forEach(effect => resolveEffect(effect, game))
 
     return {
         game,

@@ -1,11 +1,21 @@
 /* resolves an action on a target */
-const {actionTypes} = require('../constants')
+const getDamages = require('./getDamages')
+const {actionTypes, effectTypes} = require('../constants')
 
 module.exports = (action, game) => {
     switch(action.type) {
         case actionTypes.WAIT:
-            return 
+            return [{
+                type: effectTypes.WAIT,
+                target: action.target
+            }]
         case actionTypes.ATTACK:
-            return target
+            return [{
+                type: effectTypes.DAMAGE,
+                damages: getDamages({physical: action.warrior.stats.atk}, action.target),
+                target: action.target
+            }]
+        default:
+            throw 'unknown actionType : ' + action.type
     }
 }
