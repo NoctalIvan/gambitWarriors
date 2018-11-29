@@ -1,5 +1,5 @@
 /* resolves an action on a target */
-const getDamages = require('./getDamages')
+const getDamage = require('./getDamage')
 const {actionTypes, effectTypes} = require('../constants')
 
 module.exports = (action, game) => {
@@ -12,7 +12,7 @@ module.exports = (action, game) => {
         case actionTypes.ATTACK:
             return [{
                 type: effectTypes.DAMAGE,
-                damages: getDamages({physical: action.warrior.stats.atk}, action.target),
+                damage: getDamage({physical: action.warrior.stats.atk}, action.target),
                 target: action.target
             }]
         default:

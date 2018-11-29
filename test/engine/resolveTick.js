@@ -1,6 +1,6 @@
 const assert = require('assert')
 const resolveTick = require('../../src/engine/resolveTick')
-const {actionTypes, targetTypes} = require('../../src/constants')
+const {actionTypes, effectTypes, targetTypes} = require('../../src/constants')
 
 describe('resolveTick', () => {
     it('should resolve a complex tick', () => {
@@ -50,10 +50,15 @@ describe('resolveTick', () => {
                 }],
             ]
         })
-        assert.deepEqual(tickResult.events, [
-            {type: 'action', action: {type: actionTypes.ATTACK, warrior: warrior1, target: warrior2}},
-            {type: 'effect', action: {type: actionTypes.DAMAGE, warrior: warrior2, damage: {physical: 1, magical: 1}}},
-            {type: 'action', action: {type: actionTypes.ATTACK, warrior: warrior2, target: warrior2}},
-        ])
+
+        assert.equal(tickResult.events.length, 2)
+        assert.equal(tickResult.events[0].type, 'action')
+        assert.equal(tickResult.events[0].action.type, actionTypes.ATTACK)
+        assert.equal(tickResult.events[0].action.warrior.id, warrior2.id)
+        assert.equal(tickResult.events[0].action.targets[0].id, warrior1.id)
+        assert.equal(tickResult.events[1].type, 'effect')
+        assert.equal(tickResult.events[1].effect.type, effectTypes.DAMAGE)
+        assert.equal(tickResult.events[1].effect.target.id, warrior1.id)
+        assert.deepEqual(tickResult.events[1].effect.damage, {physical: 1, magical: 0})
     })
 })

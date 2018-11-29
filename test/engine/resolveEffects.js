@@ -16,7 +16,7 @@ describe('resolveEffect', () => {
         const warrior = {id: 1, army: 0, stats: {hp: 3, def: 2}}
         resolveEffect({
             type: effectTypes.DAMAGE,
-            damages: {physical: 1, magical: 0},
+            damage: {physical: 1, magical: 0},
             target: warrior
         }, {})
         assert.deepEqual(warrior, {id: 1, army:0, stats: {hp: 2, def: 2}})
@@ -28,7 +28,7 @@ describe('resolveEffect', () => {
 
         resolveEffect({
             type: effectTypes.DAMAGE,
-            damages: {physical: 1, magical: 0},
+            damage: {physical: 1, magical: 0},
             target: warrior
         }, game)
         assert.deepEqual(game, {armies: [[], []]})

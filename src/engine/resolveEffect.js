@@ -5,7 +5,7 @@ module.exports = (effect, game) => {
         case effectTypes.WAIT:
             return
         case effectTypes.DAMAGE:
-            effect.target.stats.hp = effect.target.stats.hp - (effect.damages.physical + effect.damages.magical)
+            effect.target.stats.hp = effect.target.stats.hp - (effect.damage.physical + effect.damage.magical)
             if(effect.target.stats.hp <= 0) {
                 game.armies[effect.target.army] = game.armies[effect.target.army].filter(warrior => warrior.id !== effect.target.id)
             }

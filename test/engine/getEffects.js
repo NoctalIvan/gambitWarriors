@@ -19,7 +19,7 @@ describe('getEffects', () => {
         })
         assert.deepEqual(effects, [{
             type: effectTypes.DAMAGE,
-            damages: {physical: 1, magical: 0},
+            damage: {physical: 1, magical: 0},
             target: {a: 1, stats: {def: 2}}
         }])
     })
