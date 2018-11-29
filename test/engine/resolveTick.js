@@ -1,19 +1,64 @@
 const assert = require('assert')
-const resolveTick = require('./../../src/engine/resolveTick')
+const resolveTick = require('../../src/engine/resolveTick')
+const {actionTypes, effectTypes, targetTypes} = require('../../src/constants')
 
 describe('resolveTick', () => {
-    it('should reduce atb bar by speed', () => {
-        const warriorResult = resolveTick({ATB:2, stats: {speed: 1}})
-        assert.equal(warriorResult.ATB, 1)
-    })
+    it('should resolve a complex tick', () => {
+        const warriorType = {
+            stats: {hp: 10, atk: 2, def: 2, speed: 1}, 
+            gambits: [{actionType: actionTypes.ATTACK, target: targetTypes.RANDOM_ENNEMY}]
+        }
+        
+        const warrior1 = {
+            ...JSON.parse(JSON.stringify(warriorType)),
+            id: 1,
+            army: 0,
+            ATB: 0
+        }
+        const warrior2 = {
+            ...JSON.parse(JSON.stringify(warriorType)),
+            id: 2,
+            army: 1,
+            ATB: 1
+        }
 
-    it('should reset empty ATB', () => {
-        const warriorResult = resolveTick({ATB:0})
-        assert.equal(warriorResult.ATB, 100)
-    })
+        const game = {
+            armies: [
+                [JSON.parse(JSON.stringify(warrior1))],
+                [JSON.parse(JSON.stringify(warrior2))],
+            ]
+        }
 
-    it('should never have ATB < 0', () => {
-        const warriorResult = resolveTick({ATB:1, stats: {speed: 2}})
-        assert.equal(warriorResult.ATB, 0)
+        const tickResult = resolveTick(game)
+        assert.deepEqual(tickResult.game, {
+            armies: [
+                [{
+                    ...warriorType,
+                    id: 1,
+                    army: 0,
+                    ATB: 100,
+                    stats: {
+                        ...warriorType.stats,
+                        hp: 9
+                    }
+                }],
+                [{
+                    ...warriorType,
+                    id: 2,
+                    army: 1,
+                    ATB: 0,
+                }],
+            ]
+        })
+
+        assert.equal(tickResult.events.length, 2)
+        assert.equal(tickResult.events[0].type, 'action')
+        assert.equal(tickResult.events[0].action.type, actionTypes.ATTACK)
+        assert.equal(tickResult.events[0].action.warrior.id, warrior2.id)
+        assert.equal(tickResult.events[0].action.targets[0].id, warrior1.id)
+        assert.equal(tickResult.events[1].type, 'effect')
+        assert.equal(tickResult.events[1].effect.type, effectTypes.DAMAGE)
+        assert.equal(tickResult.events[1].effect.target.id, warrior1.id)
+        assert.deepEqual(tickResult.events[1].effect.damage, {physical: 1, magical: 0})
     })
 })

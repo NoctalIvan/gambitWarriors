@@ -12,7 +12,7 @@ module.exports = (warrior, game) => {
     
     return [{
         warrior,
-        gambit,
+        type: gambit.actionType,
         targets
     }]
 }
