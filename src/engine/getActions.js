@@ -13,6 +13,8 @@ module.exports = (warrior, game) => {
     return [{
         warrior,
         type: gambit.actionType,
+        ratio: gambit.ratio,
+        element: gambit.element,
         targets
     }]
 }

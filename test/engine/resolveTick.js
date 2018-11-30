@@ -1,16 +1,21 @@
 const assert = require('assert')
 const resolveTick = require('../../src/engine/resolveTick')
-const {actionTypes, effectTypes, targetTypes, armyTypes} = require('../../src/constants')
+const {actionTypes, effectTypes, targetTypes, armyTypes, elementTypes} = require('../../src/constants')
 
 describe('resolveTick', () => {
     it('should resolve a complex tick', () => {
         const warriorType = {
             stats: {hp: 1, atk: 2, def: 2, speed: 1}, 
-            gambits: [{actionType: actionTypes.ATTACK, target: {
-                type: targetTypes.RANDOM,
-                army: armyTypes.ENNEMY,
-                n: 1
-            }}]
+            gambits: [{
+                actionType: actionTypes.ATTACK, 
+                ratio: {physical: 1, magical: 0},
+                element: elementTypes.NORMAL,
+                target: {
+                    type: targetTypes.RANDOM,
+                    army: armyTypes.ENNEMY,
+                    n: 1
+                }
+            }]
         }
         
         const warrior1 = {

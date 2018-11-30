@@ -12,7 +12,8 @@ module.exports = (action, game) => {
         case actionTypes.ATTACK:
             return [{
                 type: effectTypes.DAMAGE,
-                damage: getDamage({physical: action.warrior.stats.atk}, action.target),
+                element: action.element,
+                damage: getDamage(action, action.warrior, action.target),
                 target: action.target
             }]
         default:

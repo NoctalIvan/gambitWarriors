@@ -1,4 +1,4 @@
 module.exports = {
     WAIT: 'wait',
-    ATTACK: 'attack'
+    ATTACK: 'attack',
 }

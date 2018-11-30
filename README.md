@@ -8,9 +8,8 @@ Too busy coding it to make a readme - contact me if it pikes your curiosity ;)
 
 - [x] Basic engine
 - [x] Console simulator
-- [ ] Enriched targets
+- [x] Enriched targets
 - [ ] Enriched actions & effects
-- [ ] Enriched effect
 - [ ] Enriched gambits & gambit selection
 - [ ] Army editor
 - [ ] Warrior classes & class transformation process
@@ -23,10 +22,9 @@ Too busy coding it to make a readme - contact me if it pikes your curiosity ;)
 ### targets
 
 - [x] random ally/ennemy
-- [ ] all ally/ennemy
-- [ ] min/max stat ally/ennemy
-
-- [ ] target transformator => 1 -> n guys & 'and n around' filters
+- [x] all ally/ennemy
+- [x] min/max stat ally/ennemy
+- [x] target transformator => 1 -> n guys
 
 ### actions & effects
 

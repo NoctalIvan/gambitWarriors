@@ -1,9 +1,12 @@
 /* calculates the damage on a warrior */
 const randomRound = require('./../util/randomRound')
 
-module.exports = (damage, warrior) => {
+module.exports = (action, warrior, target) => {
+    const physicalDamage = action.ratio.physical * warrior.stats.atk
+    const magicalDamage = action.ratio.magical * warrior.stats.int
+
     return {
-        physical: damage.physical ? Math.max(1, randomRound(damage.physical * damage.physical / (damage.physical + warrior.stats.def))) : 0,
-        magical: damage.magical ? Math.max(1, randomRound(damage.magical * damage.magical / (damage.magical + warrior.stats.res))) : 0,
+        physical: physicalDamage ? Math.max(1, randomRound(physicalDamage * physicalDamage / (physicalDamage + target.stats.def))) : 0,
+        magical: magicalDamage ? Math.max(1, randomRound(magicalDamage * magicalDamage / (magicalDamage + target.stats.res))) : 0,
     }
 }
