@@ -12,4 +12,8 @@ describe('getGambitSelection', () => {
         const gambit = getGambitSelection({gambits: [{a: 1}]})
         assert.deepEqual(gambit, {a: 1})
     })
+
+    it('should fail for unknown type', () => {
+        assert.throws(() => getGambitSelection({gambits: [{}, {}]}))
+    })
 })

@@ -23,4 +23,8 @@ describe('getEffects', () => {
             target: {a: 1, stats: {def: 2}}
         }])
     })
+
+    it('should fail for unknown type', () => {
+        assert.throws(() => getEffects({type: "zargleuleu"}))
+    })
 })

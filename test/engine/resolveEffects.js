@@ -40,4 +40,8 @@ describe('resolveEffect', () => {
         assert.equal(newEffects.length, 1)
         assert.equal(newEffects[0].type, effectTypes.DEATH)
     })
+
+    it('should fail for unknown type', () => {
+        assert.throws(() => resolveEffect({type: "zargleuleu"}))
+    })
 })
