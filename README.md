@@ -29,9 +29,9 @@ Too busy coding it to make a readme - contact me if it pikes your curiosity ;)
 ### actions & effects
 
 - [x] Basic attacks
-- [ ] Magic damages
-- [ ] AoE damages
-- [ ] Healing
+- [x] Magic damages
+- [x] AoE damages
+- [x] Healing
 - [ ] Stat Buff / Debuff
 - [ ] Magic resists / buff alterations
 - [ ] Overtime damage alterations

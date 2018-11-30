@@ -43,6 +43,38 @@ describe('getEffects', () => {
         }])
     })
 
+    it('healing', () => {
+        const effects = getEffects({
+            type: actionTypes.HEAL,
+            ratio: {physical: 0, magical: 2},
+            element: elementTypes.HEAL,
+            target: {stats: {maxHp: 10, hp: 4}},
+            warrior: {stats: {atk: 1, int: 2}}
+        })
+        assert.deepEqual(effects, [{
+            type: effectTypes.HEAL,
+            element: elementTypes.HEAL,
+            heal: 4,
+            target: {stats: {maxHp: 10, hp: 4}}
+        }])
+    })
+
+    it('overHeal', () => {
+        const effects = getEffects({
+            type: actionTypes.HEAL,
+            ratio: {physical: 0, magical: 2},
+            element: elementTypes.HEAL,
+            target: {stats: {maxHp: 7, hp: 4}},
+            warrior: {stats: {atk: 1, int: 2}}
+        })
+        assert.deepEqual(effects, [{
+            type: effectTypes.HEAL,
+            element: elementTypes.HEAL,
+            heal: 3,
+            target: {stats: {maxHp: 7, hp: 4}}
+        }])
+    })
+
     it('should fail for unknown type', () => {
         assert.throws(() => getEffects({type: "zargleuleu"}))
     })

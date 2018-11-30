@@ -2,5 +2,6 @@ module.exports = {
     NORMAL: 'normal',
     FIRE: 'fire',
     ICE: 'ice',
-    THUNDER: 'thunder'
+    THUNDER: 'thunder',
+    HEAL: 'heal'
 }
