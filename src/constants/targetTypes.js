@@ -1,5 +1,7 @@
 module.exports = {
     SELF: 'self',
-    RANDOM_ENNEMY: 'random_ennemy',
-    RANDOM_ALLY: 'random_ally'
+    RANDOM: 'random',
+    ALL: 'all',
+    MAX_STAT: 'max_stat',
+    MIN_STAT: 'min_stat',
 }
