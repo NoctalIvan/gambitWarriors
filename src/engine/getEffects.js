@@ -1,6 +1,7 @@
 /* resolves an action on a target */
 const getDamage = require('./getDamage')
 const getHealing = require('./getHealing')
+const getBuff = require('./getBuff')
 const {actionTypes, effectTypes} = require('../constants')
 
 module.exports = (action, game) => {
@@ -22,6 +23,13 @@ module.exports = (action, game) => {
                 type: effectTypes.HEAL,
                 element: action.element,
                 heal: getHealing(action, action.warrior, action.target),
+                target: action.target
+            }]
+        case actionTypes.BUFF:
+            return [{
+                type: effectTypes.BUFF,
+                element: action.element,
+                buff: getBuff(action, action.warrior, action.target),
                 target: action.target
             }]
         default:

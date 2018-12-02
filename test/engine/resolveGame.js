@@ -13,7 +13,7 @@ describe('resolveGame', () => {
     })
 
     it('should resolve one sided game', () => {
-        const game = {armies: [[{ATB: 100, stats: {speed: 0}}], []]}
+        const game = {armies: [[{ATB: 100, baseStats: {speed: 0}, buffs: []}], []]}
         const events = resolveGame(game)
         assert.deepEqual(game, game)
         assert.deepEqual(events, [{

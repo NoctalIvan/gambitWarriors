@@ -75,6 +75,23 @@ describe('getEffects', () => {
         }])
     })
 
+    it('buff atk', () => {
+        const effects = getEffects({
+            type: actionTypes.BUFF,
+            ratio: {physical: 0, magical: 2},
+            element: elementTypes.BUFF,
+            buff: {atk: 1, length: 2},
+            target: {a: 1},
+            warrior: {stats: {atk: 1, int: 2}}
+        })
+        assert.deepEqual(effects, [{
+            type: effectTypes.BUFF,
+            element: elementTypes.BUFF,
+            buff: {atk: 4, length: 2},
+            target: {a: 1}
+        }])
+    })
+
     it('should fail for unknown type', () => {
         assert.throws(() => getEffects({type: "zargleuleu"}))
     })

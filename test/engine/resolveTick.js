@@ -5,7 +5,9 @@ const {actionTypes, effectTypes, targetTypes, armyTypes, elementTypes} = require
 describe('resolveTick', () => {
     it('should resolve a complex tick', () => {
         const warriorType = {
-            stats: {hp: 1, atk: 2, def: 2, speed: 1}, 
+            baseStats: {hp: 1, atk: 2, def: 2, int: 1, res: 1, speed: 1}, 
+            stats: {hp: 1, atk: 2, def: 2, int: 1, res: 1, speed: 1}, 
+            buffs: [],
             gambits: [{
                 actionType: actionTypes.ATTACK, 
                 ratio: {physical: 1, magical: 0},
@@ -44,6 +46,7 @@ describe('resolveTick', () => {
                 [],
                 [{
                     ...warriorType,
+
                     id: 2,
                     army: 1,
                     ATB: 0,

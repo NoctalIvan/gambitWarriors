@@ -1,4 +1,5 @@
 /* resolve one tick on a game */
+const resolveBuffs = require('./resolveBuffs')
 const resolveATB = require('./resolveATB')
 const getActions = require('./getActions')
 const getEffect = require('./getEffects')
@@ -9,6 +10,13 @@ const {} = require('./../constants')
 
 module.exports = (game) => {
     let events = []
+
+    // resolve buffs for each warrior
+    game.armies.forEach(army => 
+        army.forEach(warrior => 
+            resolveBuffs(warrior)
+        )
+    )
 
     // resolve ATB for each warrior
     game.armies.forEach(army => 
