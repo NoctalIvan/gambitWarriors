@@ -1,5 +1,5 @@
 const copy = require('./../../src/util/copy')
-const {actionTypes, targetTypes} = require('./../../src/constants')
+const {actionTypes, targetTypes, elementTypes, armyTypes} = require('./../../src/constants')
 
 const warrior = {
     stats: {
@@ -10,7 +10,13 @@ const warrior = {
     },
     gambits: [{
         actionType: actionTypes.ATTACK,
-        target: targetTypes.RANDOM_ENNEMY
+        ratio: {physical: 1, magical: 0},
+        element: elementTypes.NORMAL,
+        target: {
+            type: targetTypes.RANDOM,
+            army: armyTypes.ENNEMY,
+            n: 1
+        }
     }],
 }
 
