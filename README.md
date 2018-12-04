@@ -32,7 +32,7 @@ Too busy coding it to make a readme - contact me if it pikes your curiosity ;)
 - [x] Magic damages
 - [x] AoE damages
 - [x] Healing
-- [ ] Stat Buff / Debuff
+- [x] Stat Buff / Debuff
 - [ ] Magic resists / buff alterations
 - [ ] Overtime damage alterations
 - [ ] Raw, % damages

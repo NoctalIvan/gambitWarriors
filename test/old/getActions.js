@@ -9,7 +9,12 @@ describe('getActions', () => {
     })
 
     it('should return an action in normal case', () => {
-        const gambit = {actionType: actionTypes.WAIT, element: 'a', ratio: 'b', target: {type: targetTypes.SELF}}
+        const gambit = {
+            actionType: actionTypes.WAIT, 
+            element: 'a', 
+            ratio: 'b', 
+            target: {type: targetTypes.SELF}
+        }
         const warrior = {ATB: 0, gambits: [gambit]}
         const actions = getActions(warrior)
         assert.deepEqual(actions, [{

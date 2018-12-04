@@ -1,5 +1,5 @@
 /* returns the gambit that matches a given situation */
-const {actionTypes} = require('../constants')
+const {actionTypes} = require('../types/enums')
 
 module.exports = (warrior, game) => {
     if(warrior.gambits.length === 0) {

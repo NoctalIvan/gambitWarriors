@@ -1,4 +1,4 @@
-const {targetTypes, armyTypes} = require('../constants')
+const {targetTypes, armyTypes} = require('../types/enums')
 const {pickRandom, copy} = require('../util')
 
 /* returns the sected target(s) */
