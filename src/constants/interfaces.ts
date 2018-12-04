@@ -24,7 +24,8 @@ export interface IAction {
 
 export interface IEffect {
     type: EffectType,
-    sender: Unit
+    sender: Unit,
+    target: Unit
 }
 
 export interface IEvent {

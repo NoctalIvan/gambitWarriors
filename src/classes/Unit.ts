@@ -1,4 +1,4 @@
-import { EffectType, EventType } from '../constants/enums'
+import { EffectType } from '../constants/enums'
 import { IAction, IEffect, IStats } from './../constants/interfaces'
 import { Warrior } from './Warrior'
 
@@ -36,7 +36,7 @@ export class Unit {
     }
 
     // resolves an effect on itself
-    public resolveEffect(effect: IEffect): EventType[] {
+    public resolveEffect(effect: IEffect): IEffect[] {
         switch (effect.type) {
             case EffectType.WAIT:
                 return []
