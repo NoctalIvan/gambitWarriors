@@ -1,5 +1,5 @@
 import { Unit } from './../classes/Unit'
-import { ActionType, EffectType, EventType, TargetType } from './enums'
+import { ActionType, ArmyType, EffectType, ElementType, EventType, TargetType } from './enums'
 
 export interface IStats {
     hp: number,
@@ -19,7 +19,11 @@ export interface IRatio {
 export interface IAction {
     sender: Unit
     type: ActionType,
-    target: TargetType,
+    target: ITarget,
+    element?: ElementType,
+    damage?: IRatio,
+    heal?: number,
+    buff?: IStats
 }
 
 export interface IEffect {
@@ -30,6 +34,20 @@ export interface IEffect {
 
 export interface IEvent {
     type: EventType,
-    action: IAction|null,
-    effect: IEffect|null
+    tick: number
+}
+export interface IActionEvent extends IEvent {
+    action: IAction
+}
+export interface IEffectEvent extends IEvent {
+    effect: IEffect
+}
+
+export interface ITarget {
+    type: TargetType,
+    army: ArmyType,
+    n: number
+}
+export interface IStatTarget extends ITarget {
+    stats: IStats
 }

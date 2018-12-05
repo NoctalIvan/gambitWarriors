@@ -8,6 +8,8 @@ export class Warrior {
 
     constructor(stats: IStats) {
         this.stats = stats
+        this.name = "noname"
+        this.gambits = []
     }
 
     public selectGambit(): Gambit {

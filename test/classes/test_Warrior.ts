@@ -1,15 +1,14 @@
-import assert from 'assert'
-import { Unit } from './../../src/classes/unit'
-import { Warrior } from './../../src/classes/Warrior'
-
-let warrior
-let unit
+const assert = require('assert')
+import {waitWarrior} from './mock/warriors'
+import { ActionType } from '../../src/constants/enums';
 
 describe('Warrior', () => {
     it('Should create', () => {
-        warrior = new Warrior({hp: 2, mp: 2, atk: 2, def: 2, int: 2, res: 2, speed: 2})
-        unit = new Unit(warrior)
-        unit.updateStats()
-        console.log(unit)
+        assert.ok(waitWarrior)
+    })
+
+    it('Should select only gambit', () => {
+        const gambit = waitWarrior.selectGambit()
+        assert.equal(gambit.action, ActionType.WAIT)
     })
 })
