@@ -9,6 +9,8 @@ export class Unit {
     public armyId: number
     public stats: IStats
     public ATB: number
+    public hp: number
+    public mp: number
     public dead: boolean
 
     constructor(warrior: Warrior, armyId: number) {
@@ -16,11 +18,13 @@ export class Unit {
         this.armyId = armyId
         this.stats = warrior.stats
         this.ATB = Math.floor(Math.random() * 100)
+        this.hp = warrior.stats.maxHp
+        this.mp = 0
     }
 
     // updates stats according to base stats & buffs
     public updateStats(): void {
-        this.stats = JSON.parse(JSON.stringify(this.warrior.stats))
+        this.stats = {...this.warrior.stats}
     }
 
     // updates after a tick and returns a list of actions
@@ -59,6 +63,18 @@ export class Unit {
         switch (effect.type) {
             case EffectType.WAIT:
                 return []
+            case EffectType.DAMAGE:
+                this.hp = this.hp - (effect.damage.physical + effect.damage.magical)
+                return this.hp <= 0 ? [{
+                    type: EffectType.DEATH,
+                    target: this,
+                    sender: this
+                }] : []
+            case EffectType.DEATH:
+                this.dead = true
+                return []
+            default:
+                throw 'unknown effectType: ' + effect.type
         }
     }
 

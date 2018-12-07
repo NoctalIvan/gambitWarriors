@@ -1,11 +1,12 @@
 import { ActionType, ArmyType, EffectType, EventType, TargetType } from '../constants/enums'
-import { IAction, IEffect } from '../constants/interfaces'
+import { IAction, IEffect, IEvent } from '../constants/interfaces'
 import { pickRandom } from './../util/pickRandom'
+import { collapse, doubleCollapse } from './../util/collapseArray'
 import { Unit } from './Unit'
 import { Warrior } from './Warrior'
 
 export class Game {
-    private readonly armies: Unit[][]
+    public armies: Unit[][]
 
     constructor(army1: Warrior[], army2: Warrior[]) {
         this.armies = [
@@ -15,20 +16,21 @@ export class Game {
     }
 
     // resolve a full game
-    public resolveGame(): EventType[] {
+    public resolveGame(): IEvent[] {
         let events = []
         let tickCount = 1
-        while(this.armies.find(army => army.length > 0)) {
+        while(!this.armies.find(army => army.length === 0)) {
             events = events.concat(this.resolveTick(tickCount))
             tickCount ++
+            if(tickCount > 1000) throw "too many ticks"
         }
 
         return events
     }
 
     // resolve a game tick
-    private resolveTick(tick:number): EventType[] {
-        let events = []
+    private resolveTick(tick:number): IEvent[] {
+        let events:IEvent[] = []
 
         // resolve stats
         this.armies.forEach((army) => {
@@ -38,24 +40,21 @@ export class Game {
         })
 
         // resolve tick & get actions
-        const actions: IAction[] = this.armies.map((army) => {
+        const actions: IAction[] = doubleCollapse(this.armies.map((army) =>
             army.map((warrior) =>
                 warrior.resolveTick(),
             )
-        }).reduce((acc, a) => acc.concat(a), [])
+        ))
         events = events.concat(actions.map((action) => ({type: EventType.ACTION, action, tick})))
 
         // get effect for each action
-        let effects: IEffect[] = actions
-            .map((action) => this.getEffects(action))
-            .reduce((acc, a) => acc.concat(a), [])
+        let effects: IEffect[] = collapse(actions
+            .map((action) => this.getEffects(action)))
         events = events.concat(effects.map((effect) => ({type: EventType.EFFECT, effect, tick})))
 
         do {
             // resolve those effects (loops for effects triggering others)
-            effects = effects
-                .map((effect) => effect.target.resolveEffect(effect))
-                .reduce((acc, a) => acc.concat(a), [])
+            effects = collapse(effects.map((effect) => effect.target.resolveEffect(effect)))
             events = events.concat(effects.map((effect) => ({type: EventType.EFFECT, effect, tick})))
         } while (effects.length > 0)
 

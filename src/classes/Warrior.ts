@@ -6,10 +6,18 @@ export class Warrior {
     public stats: IStats
     public gambits: Gambit[]
 
-    constructor(stats: IStats) {
+    constructor(stats: IStats, name?: string, gambits?: Gambit[]) {
         this.stats = stats
-        this.name = "noname"
-        this.gambits = []
+        this.name = name || "noname"
+        this.gambits = gambits || []
+    }
+
+    public getCopy() {
+        return new Warrior(
+            {...this.stats},
+            this.name,
+            JSON.parse(JSON.stringify(this.gambits))
+        )
     }
 
     public selectGambit(): Gambit {

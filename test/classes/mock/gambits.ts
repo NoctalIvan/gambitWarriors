@@ -28,3 +28,10 @@ export const selfBuff = new Gambit(
     ElementType.NORMAL,
     {type: TargetType.SELF, army: ArmyType.ALLY, n: 1},
 )
+
+export const attackGambit = new Gambit(
+    ActionType.ATTACK,
+    ElementType.NORMAL,
+    {type: TargetType.RANDOM, army: ArmyType.ENNEMY, n: 1},
+    {physical: 1, magical: 0}
+)
