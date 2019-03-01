@@ -1,4 +1,6 @@
+import { BattleEvent } from "./BattleEvent";
+
 export interface BattleResult {
     winner: number,
-    events: string[]
+    events: BattleEvent[]
 }

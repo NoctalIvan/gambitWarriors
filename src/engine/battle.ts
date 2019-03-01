@@ -3,6 +3,7 @@ import { Army } from './../types/Army'
 import { BattleResult } from '../types/BattleResult';
 import { Warrior } from '../types/Warrior';
 import { Action, ActionTypes } from '../types/Action';
+import { BattleEvent, BattleEventType } from '../types/BattleEvent';
 
 export function checkWin(warriors: Warrior[]) {
     if(!warriors.find(w => !w.dead && w.army == 0)) {
@@ -14,15 +15,15 @@ export function checkWin(warriors: Warrior[]) {
     }
 }
 
-let events = []
+let events:BattleEvent[] = []
 export function battle(warriors: Warrior[]) : BattleResult {
-    events = ['Start battle']
+    events = [{type: BattleEventType.START}]
 
     while(true) {
         // check if win
         const win = checkWin(warriors)
         if(win !== null) {
-            events.push('win ' + win)
+            events.push({type: BattleEventType.END, army: win})
             return {winner: win, events}
         }
 
@@ -54,7 +55,7 @@ export function getAction(origin: Warrior, warriors: Warrior[]) : Action {
         target
     }
 
-    events.push(origin.id + ' -> atk -> ' + target.id)
+    events.push({type:BattleEventType.ATTACK, origin, target})
     return action
 }
 
@@ -62,15 +63,14 @@ export function resolveAction(action: Action, warriors: Warrior[]) : void {
     switch(action.type) {
         case ActionTypes.ATTACK:
             action.target.hp -= action.origin.atk
-            events.push(action.target.id + ' : DMG ' + action.origin.atk)
-            events.push(action.target.id + ' : hp -> ' + action.target.hp)
+            events.push({type: BattleEventType.DAMAGE, target: action.target, value: action.origin.atk})
     }
 
     action.origin.atb = 100
 
     if(action.target.hp <= 0) {
         action.target.dead = true
-        events.push(action.target.id + ' -> DEAD XXX')
+        events.push({type: BattleEventType.DEATH, target: action.target})
     }
 }
 
