@@ -1,3 +1,4 @@
 export interface BattleResult {
-    winner: number
+    winner: number,
+    events: string[]
 }

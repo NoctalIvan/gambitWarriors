@@ -14,12 +14,16 @@ export function checkWin(warriors: Warrior[]) {
     }
 }
 
+let events = []
 export function battle(warriors: Warrior[]) : BattleResult {
+    events = ['Start battle']
+
     while(true) {
         // check if win
         const win = checkWin(warriors)
         if(win !== null) {
-            return {winner: win}
+            events.push('win ' + win)
+            return {winner: win, events}
         }
 
         // resolve tick
@@ -44,21 +48,29 @@ export function getTarget(warrior: Warrior, warriors: Warrior[]) : Warrior {
 
 export function getAction(origin: Warrior, warriors: Warrior[]) : Action {
     const target = getTarget(origin, warriors)
-    return {
+    const action = {
         type: ActionTypes.ATTACK,
         origin,
         target
     }
+
+    events.push(origin.id + ' -> atk -> ' + target.id)
+    return action
 }
 
 export function resolveAction(action: Action, warriors: Warrior[]) : void {
     switch(action.type) {
         case ActionTypes.ATTACK:
             action.target.hp -= action.origin.atk
+            events.push(action.target.id + ' : DMG ' + action.origin.atk)
+            events.push(action.target.id + ' : hp -> ' + action.target.hp)
     }
+
+    action.origin.atb = 100
 
     if(action.target.hp <= 0) {
         action.target.dead = true
+        events.push(action.target.id + ' -> DEAD XXX')
     }
 }
 

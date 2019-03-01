@@ -2,9 +2,9 @@ import { Army } from "./types/army";
 import { battle } from "./engine/battle";
 import { Warrior } from "./types/Warrior";
 
-function getWarriorModel(army:number) : Warrior {
+function getWarriorModel(army:number, id: string) : Warrior {
     return {
-        id: Math.random().toString(),
+        id,
         dead: false,
         army,
 
@@ -16,9 +16,9 @@ function getWarriorModel(army:number) : Warrior {
 }
 
 const result = battle([
-    getWarriorModel(0),
-    getWarriorModel(0),
-    getWarriorModel(1),
-    getWarriorModel(1),
+    getWarriorModel(0, "Albert"),
+    getWarriorModel(0, "Alex"),
+    getWarriorModel(1, "Bibi"),
+    getWarriorModel(1, "Breta"),
 ])
 console.log(result)
