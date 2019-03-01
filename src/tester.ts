@@ -3,13 +3,20 @@ import { battle } from "./engine/battle";
 import { Warrior } from "./types/Warrior";
 import { ActionType } from "./types/Action";
 import { TargetType } from "./types/Target";
+import { GambitConditionType } from "./types/Gambit";
 
 function getWarriorModel(army:number, id: string) : Warrior {
     return {
         id,
         dead: false,
         army,
-        gambits: [{actionType: ActionType.ATTACK, targetType: TargetType.RANDOM_ENNEMY}],
+        gambits: [{
+            actionType: ActionType.ATTACK, 
+            targetType: TargetType.RANDOM_ENNEMY,
+            condition: {
+                type: GambitConditionType.ALWAYS
+            }
+        }],
 
         atk: 3,
         hp: 10,

@@ -4,7 +4,7 @@ import { BattleResult } from '../types/BattleResult';
 import { Warrior } from '../types/Warrior';
 import { Action, ActionType } from '../types/Action';
 import { BattleEvent } from '../types/BattleEvent';
-import { Gambit } from '../types/Gambit';
+import { Gambit, DefaultGambit, GambitConditionType } from '../types/Gambit';
 import { TargetType } from '../types/Target';
 import { pickRandom } from '../utils/pickRandom';
 
@@ -47,13 +47,26 @@ export function getNextWarriot(warriors: Warrior[]) : Warrior {
 }
 
 export function getGambit(warrior: Warrior, warriors: Warrior[]) : Gambit {
-    return warrior.gambits[0]
+    const selectedGambit = warrior.gambits.find(gambit => {
+        switch(gambit.condition.type) {
+            case GambitConditionType.ALWAYS:
+                return true
+            case GambitConditionType.NEVER:
+                return false
+            default:
+                throw 'unknown gambitConditionType : ' + gambit.condition.type
+        }
+    })
+
+    return selectedGambit || DefaultGambit
 }
 
 export function getTarget(gambit: Gambit, warrior: Warrior, warriors: Warrior[]) : Warrior {
     switch(gambit.targetType) {
         case TargetType.RANDOM_ENNEMY:
             return pickRandom(warriors.filter(w => w.army != warrior.army && !w.dead))
+        case TargetType.SELF:
+            return warrior
         default:
             throw 'unknown targetType ' + gambit.targetType
     }
@@ -77,6 +90,9 @@ export function resolveAction(action: Action, warriors: Warrior[]) : void {
         case ActionType.ATTACK:
             action.target.hp -= action.origin.atk
             events.push({type: ActionType.DAMAGE, target: action.target, value: action.origin.atk})
+            break
+        case ActionType.WAIT:
+            events.push({type: ActionType.WAIT, target: action.origin})
             break
         default:
             throw 'unknown actionType ' + action.type

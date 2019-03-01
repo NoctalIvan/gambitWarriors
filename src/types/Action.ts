@@ -8,6 +8,7 @@ export interface Action {
 
 export enum ActionType {
     ATTACK = 'ATTACK',
+    WAIT = 'WAIT',
     DAMAGE = "DAMAGE",
     DEATH = "DEATH",
     START = "START",
