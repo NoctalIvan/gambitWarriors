@@ -1,4 +1,0 @@
---require source-map-support/register
---full-trace
---bail
-src/**/*.ts src/**/*.tsx
