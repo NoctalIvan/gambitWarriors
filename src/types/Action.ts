@@ -1,11 +1,15 @@
 import { Warrior } from "./Warrior";
 
 export interface Action {
-    type: ActionTypes,
+    type: ActionType,
     origin: Warrior,
     target: Warrior    
 }
 
-export enum ActionTypes {
-    ATTACK = 'ATTACK'
+export enum ActionType {
+    ATTACK = 'ATTACK',
+    DAMAGE = "DAMAGE",
+    DEATH = "DEATH",
+    START = "START",
+    END = "END"
 }

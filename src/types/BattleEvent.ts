@@ -1,15 +1,8 @@
 import { Warrior } from "./Warrior";
-
-export enum BattleEventType {
-    ATTACK = "ATTACK",
-    DAMAGE = "DAMAGE",
-    DEATH = "DEATH",
-    START = "START",
-    END = "END"
-}
+import { ActionType } from "./Action";
 
 export interface BattleEvent {
-    type: BattleEventType,
+    type: ActionType,
     origin?: Warrior,
     target?: Warrior,
     army?: number,

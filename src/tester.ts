@@ -1,12 +1,15 @@
 import { Army } from "./types/army";
 import { battle } from "./engine/battle";
 import { Warrior } from "./types/Warrior";
+import { ActionType } from "./types/Action";
+import { TargetType } from "./types/Target";
 
 function getWarriorModel(army:number, id: string) : Warrior {
     return {
         id,
         dead: false,
         army,
+        gambits: [{actionType: ActionType.ATTACK, targetType: TargetType.RANDOM_ENNEMY}],
 
         atk: 3,
         hp: 10,

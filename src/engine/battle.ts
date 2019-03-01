@@ -2,8 +2,11 @@
 import { Army } from './../types/Army'
 import { BattleResult } from '../types/BattleResult';
 import { Warrior } from '../types/Warrior';
-import { Action, ActionTypes } from '../types/Action';
-import { BattleEvent, BattleEventType } from '../types/BattleEvent';
+import { Action, ActionType } from '../types/Action';
+import { BattleEvent } from '../types/BattleEvent';
+import { Gambit } from '../types/Gambit';
+import { TargetType } from '../types/Target';
+import { pickRandom } from '../utils/pickRandom';
 
 export function checkWin(warriors: Warrior[]) {
     if(!warriors.find(w => !w.dead && w.army == 0)) {
@@ -17,13 +20,13 @@ export function checkWin(warriors: Warrior[]) {
 
 let events:BattleEvent[] = []
 export function battle(warriors: Warrior[]) : BattleResult {
-    events = [{type: BattleEventType.START}]
+    events = [{type: ActionType.START}]
 
     while(true) {
         // check if win
         const win = checkWin(warriors)
         if(win !== null) {
-            events.push({type: BattleEventType.END, army: win})
+            events.push({type: ActionType.END, army: win})
             return {winner: win, events}
         }
 
@@ -43,34 +46,47 @@ export function getNextWarriot(warriors: Warrior[]) : Warrior {
         [0]
 }
 
-export function getTarget(warrior: Warrior, warriors: Warrior[]) : Warrior {
-    return warriors.find(w => w.army != warrior.army && !w.dead)
+export function getGambit(warrior: Warrior, warriors: Warrior[]) : Gambit {
+    return warrior.gambits[0]
+}
+
+export function getTarget(gambit: Gambit, warrior: Warrior, warriors: Warrior[]) : Warrior {
+    switch(gambit.targetType) {
+        case TargetType.RANDOM_ENNEMY:
+            return pickRandom(warriors.filter(w => w.army != warrior.army && !w.dead))
+        default:
+            throw 'unknown targetType ' + gambit.targetType
+    }
 }
 
 export function getAction(origin: Warrior, warriors: Warrior[]) : Action {
-    const target = getTarget(origin, warriors)
+    const gambit = getGambit(origin, warriors)
+    const target = getTarget(gambit, origin, warriors)
     const action = {
-        type: ActionTypes.ATTACK,
+        type: gambit.actionType,
         origin,
         target
     }
 
-    events.push({type:BattleEventType.ATTACK, origin, target})
+    events.push({type: gambit.actionType, origin, target})
     return action
 }
 
 export function resolveAction(action: Action, warriors: Warrior[]) : void {
     switch(action.type) {
-        case ActionTypes.ATTACK:
+        case ActionType.ATTACK:
             action.target.hp -= action.origin.atk
-            events.push({type: BattleEventType.DAMAGE, target: action.target, value: action.origin.atk})
+            events.push({type: ActionType.DAMAGE, target: action.target, value: action.origin.atk})
+            break
+        default:
+            throw 'unknown actionType ' + action.type
     }
 
     action.origin.atb = 100
 
     if(action.target.hp <= 0) {
         action.target.dead = true
-        events.push({type: BattleEventType.DEATH, target: action.target})
+        events.push({type: ActionType.DEATH, target: action.target})
     }
 }
 
