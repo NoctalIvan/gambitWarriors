@@ -18,7 +18,11 @@ function getWarriorModel(army:number, id: string) : Warrior {
             }
         }],
 
-        atk: 3,
+        atk: 6,
+        int: 3,
+        res: 3,
+        def: 3,
+        maxHp: 10,
         hp: 10,
         speed: 10,
         atb: Math.floor(100*Math.random()),

@@ -78,18 +78,32 @@ export function getAction(origin: Warrior, warriors: Warrior[]) : Action {
     const action = {
         type: gambit.actionType,
         origin,
-        target
+        target, 
+        physicalRatio: 1,
+        magicalRatio: 0
     }
 
     events.push({type: gambit.actionType, origin, target})
     return action
 }
 
+export function calculateDamage(action: Action) {
+    const physicalDamage = action.physicalRatio * 
+        (action.origin.atk * action.origin.atk) / 
+        (action.origin.atk * action.target.def)
+    const magicalDamage = action.magicalRatio * 
+    (action.origin.int * action.origin.int) / 
+    (action.origin.int * action.target.res)
+
+    return physicalDamage + magicalDamage
+}
+
 export function resolveAction(action: Action, warriors: Warrior[]) : void {
     switch(action.type) {
         case ActionType.ATTACK:
-            action.target.hp -= action.origin.atk
-            events.push({type: ActionType.DAMAGE, target: action.target, value: action.origin.atk})
+            const damage = calculateDamage(action)
+            action.target.hp -= damage
+            events.push({type: ActionType.DAMAGE, target: action.target, value: damage})
             break
         case ActionType.WAIT:
             events.push({type: ActionType.WAIT, target: action.origin})

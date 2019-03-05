@@ -6,8 +6,12 @@ export interface Warrior {
     dead: boolean,
     gambits: Gambit[]
 
-    hp: number,
-    atk: number,
-    speed: number,
-    atb: number
+    maxHp: number, // total life points of a warrior
+    hp: number, // remaining life points of a warrior
+    atk: number, // physical dmg
+    int: number, // magical dmg
+    def: number, // physical resistance
+    res: number, // magical resistance
+    speed: number, // atb decrease rate
+    atb: number // remaining atb points before action
 }

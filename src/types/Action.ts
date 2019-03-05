@@ -3,7 +3,9 @@ import { Warrior } from "./Warrior";
 export interface Action {
     type: ActionType,
     origin: Warrior,
-    target: Warrior    
+    target: Warrior,
+    physicalRatio: number,
+    magicalRatio: number
 }
 
 export enum ActionType {
